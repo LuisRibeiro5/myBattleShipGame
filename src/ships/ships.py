@@ -1,0 +1,6 @@
+ships = {
+    
+}
+
+class Ship:
+    pass
