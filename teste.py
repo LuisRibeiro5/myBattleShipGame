@@ -13,9 +13,21 @@
 #         break
 #     i += 1
 
-positions = {}
+def set_positions(initial_pos, size, orientation):
+    positions = {}
+    x,y = initial_pos
 
-positions[1,2] = False
+    for i in range(size):
+        if orientation == "vertical":
+            positions[ (x + i,y) ] = True
+        else:#Horizontal
+            positions[ (x,y + i) ] = True
 
-print(positions)
+    return positions
 
+if __name__ == "__main__":
+    positions = set_positions((0,0), 5, "vertical")
+    print(positions)
+    for pos in positions:
+        print(pos, type(pos))
+    print(all([ positions.values()]))

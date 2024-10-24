@@ -124,7 +124,7 @@ def aux_board(board):
     board_return = board_str.split("\n")
     return board_return
 
-def print_board(board1, board2):
+def print_boards(board1, board2):
     for linha1, linha2 in zip(aux_board(board1), aux_board(board2)):
         print(linha1,"\t\t",linha2) 
 
