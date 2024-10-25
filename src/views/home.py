@@ -1,5 +1,5 @@
 def display_home_menu():
-    print("=== Batalha Navalj ===")
+    print("=== Batalha Naval ===")
     print("1. Iniciar Jogo")
     print("2. sair")
     resp = input("> ")

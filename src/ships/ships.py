@@ -25,22 +25,17 @@ class Ship:
 
         for i in range(self.size):
             if self.orientation == "vertical":
-                self.positions[ (x + i,y) ] = True
+                self.coordinates[ (x + i,y) ] = True
             else:#Horizontal
-                self.positions[ (x,y + i) ] = True
-    
-    def is_sunk(self):
-        # Verificar se o navio foi afundado
-        
-        pass
+                self.coordinates[ (x,y + i) ] = True
 
 def get_valid_xy():
     while True:
         try:
-            x = input("position x: ")
+            x = input("position x: ").upper()
             x = ord(x) - ord("A")#converte para idx da row
             if x < 0 or x >= 10:
-                print("choose a x between 0 - 9")
+                print("choose a x between A - J")
                 continue
             y = int(input("position y: "))
             if y < 0 or y >= 10:
@@ -73,27 +68,35 @@ def is_valid_position(initial_pos,ship_size,ship_orientation, board):
     return: bool: retorna True se a posicao esta disponivel
     """
     x,y = initial_pos
-
+    print(f'{x=} {y=}')
+    print("iniciou testes")
     if not fits_in_table(initial_pos, ship_size, ship_orientation):
+        print("nao coube na tabela")
         return False
     
     if ship_orientation == "vertical":
         #for aninha que verifica se posição e posições em volta estão livres ou não
-        for j in range(-1,2):
-            for i in range(-1,ship_size + 1): 
+        for row in range(x - 1, x + ship_size + 1):
+            for j in range(-1,2):
                 try:
-                    if board[x + i][y + j] != " ":
+                    if board[row][y - j] != " ":
+                        print("Tem navio perto!")
                         return False
                 except:
                     continue
+        
     else:#horizontal
         for i in range(-1,2):
-            for j in range(-1,ship_size + 1): 
+            for col in range(y - 1, y + ship_size + 1):
                 try:
-                    if board[x + i][y + j] != " ":
+                    if board[x - i][col] != " ":
+                        print(f'{x - i} {col}')
+                        print("Tem navio perto!")
                         return False
                 except:
                     continue
+                
+    print("pos valida")
     return True
 
 def fits_in_table(initial_pos, ship_size,ship_orientation):
@@ -106,10 +109,14 @@ def fits_in_table(initial_pos, ship_size,ship_orientation):
     return: bool: Se o navio cabe(É uma initial_pos válida) retorna True
     """
     x,y = initial_pos
+    print(f'{ship_orientation=}')
+    print(f'fits in table {x=} {y=}')
     
     if ship_orientation == "horizontal":
         if y - 1 + ship_size > 9:#-1 porque incluimos a posicao inicial na contagem
             return False         #(1,5) + 5(ship_size) *navio comeca na posicao 5 e acaba na 9. Dentro do range.
-        else:
-            if x - 1 + ship_size > 9:
-                return False
+    else:
+        if x - 1 + ship_size > 9:
+            return False
+    return True
+        

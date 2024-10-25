@@ -1,9 +1,10 @@
-from table.table import Table
+from src.table.table import Table
 from src.ships.ships import *
 from src.views.player_time import get_player_attack, display_player_turn
 from src.views.enemy_time import get_enemy_attack, display_enemy_turn
 from src.views.home import display_home_menu
-from src.views.view import print_boards
+from src.views.view import print_boards,show_ships_on_board
+import time
 import random
 
 class Runtime:
@@ -15,7 +16,10 @@ class Runtime:
         # Iniciar o jogo e o loop principal
         display_home_menu()
         
+        print("\n====escolhendo navios do player====\n")
         self.initialize_ships(self.player_table)
+        print("\n====escolhendo navios do pc====\n")
+        time.sleep(3)
         self.initialize_ships(self.enemy_table)
         
         key = 0
@@ -44,7 +48,11 @@ class Runtime:
                 break
             print("Essa posicao ja foi atacada")
             
-        self.enemy_table.is_hit(coordinate)
+        if self.enemy_table.is_hit(coordinate):
+            print("\n===Voce acertou um navio!!!====\n")
+            print_boards(self.player_table.board,self.enemy_table.game_board)
+            print("\nVoce pode atirar de novo!")
+            self.handle_player_turn()
         #adicionar no is hit uma verificacao para caso a posicao escolhida ja tenha sido atacada
         print_boards(self.player_table.board,self.enemy_table.game_board)
     
@@ -59,7 +67,11 @@ class Runtime:
                 break
             print("Essa posicao ja foi atacada")
         
-        self.player_table.is_hit(coordinate)
+        if self.player_table.is_hit(coordinate):
+            print("\n===O inimigo acertou um navio!!!====\n")
+            print_boards(self.player_table.board,self.enemy_table.game_board)
+            print("\nEle pode atirar de novo!")
+            self.handle_enemy_turn()
         print_boards(self.player_table.board,self.enemy_table.game_board)
         
     
@@ -76,19 +88,28 @@ class Runtime:
         
         :return None: 
         """
-        for ship in ships:
-            name = ship
-            size = ships[ship]
-            while True:
-                if player == self.player_table:
-                    orientation = get_orientation()
-                    x,y = get_valid_xy()
-                else:
-                    orientation = random.choice(["vertical","horizontal"])
-                    x = random.randint(0,9)
-                    y = random.randint(0,9)
+        for ship_types in ships:
             
-                if is_valid_position((x,y), size, orientation, player):
-                    ship_instance = Ship(name, (x,y), size, orientation)
-                    player.place_ship(ship_instance)
-                    break     
+            name = ship_types
+            size = ships[ship_types][0]
+            num_ships = ships[ship_types][1]
+            
+            for ship in range(num_ships):
+                while True:
+                    if player == self.player_table:
+                        show_ships_on_board(player.board)
+                        x,y = get_valid_xy()
+                        orientation = get_orientation()
+                    else:
+                        orientation = random.choice(["vertical","horizontal"])
+                        x = random.randint(0,9)
+                        y = random.randint(0,9)
+
+                    if is_valid_position((x,y), size, orientation, player.board):
+                        ship_instance = Ship(name, (x,y), size, orientation)
+                        player.place_ship(ship_instance)
+                        break     
+    
+    def test():
+        table = Table()
+        show_ships_on_board(table.board)

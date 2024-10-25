@@ -17,22 +17,32 @@ class Table:
         """
         self.ships.append(ship)
         for x,y in ship.coordinates:
+            print(x,y)
             self.board[x][y] = "1"
             
         pass
     
     def is_hit(self, coordinates):
-        # Verificar se uma coordenada foi atingida
+        """
+        Verifica oque foi atingido após o ataque inimigo.
+        Se a coordenada no tabuleiro "self.board" for " " significa que errou o tiro e coloca "~", se acertou coloca "X".
+        O tabuleiro alterado é sempre o do game board. 
+        
+        param: coordinates: tuple com x e y
+        return: bool: True se acertou um navio
+        """
         x,y = coordinates
-        #se a coordenada no tabuleiro "escondido" for " " significa que errou o tiro, o tabuleiro alterado é sempre o do game board. 
+
         if self.board[x][y] == " ": 
             self.game_board[x][y] = "~"
             print("acertou o mar")
+            return False
         
-        elif self.board[x][y] == "1":#acertou um navio
-            self.game_board[x][y] = "X"
-            print("acertou um navio")
-            self.ship_destroyed((x,y))
+        #acertou um navio
+        self.game_board[x][y] = "X"
+        print("acertou um navio")
+        self.ship_destroyed((x,y))
+        return True
             
             
         
@@ -48,7 +58,7 @@ class Table:
                     #se essa condicao retornar True significa que todos
                     #navios foram destruidos
                     if not all([ship.values()]):
-                        print("Voce afundou um navio!!!")
+                        print(f"Voce afundou o navio {ship}!!!")
                         self.sunks.append(ship)
 
                     return
