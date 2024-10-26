@@ -35,6 +35,12 @@ def print_boards(board1, enemy_board2):
         print(linha1,"\t\t",linha2) 
         
 def show_ships_on_board(board):
+    """
+    Recebe um tabuleiro para realizar o output
+    
+    :param board Table.board para fazer o print
+    :return None
+    """
     print(' '*4,"0   1   2   3   4   5   6   7   8   9  ")
     linha = 'A'
     for i,row in enumerate(board):

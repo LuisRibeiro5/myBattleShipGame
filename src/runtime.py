@@ -15,12 +15,7 @@ class Runtime:
     def start_game(self):
         # Iniciar o jogo e o loop principal
         display_home_menu()
-        
-        print("\n====escolhendo navios do player====\n")
-        self.initialize_ships(self.player_table)
-        print("\n====escolhendo navios do pc====\n")
-        time.sleep(3)
-        self.initialize_ships(self.enemy_table)
+        self.start_ships()
         
         key = 0
         while True:
@@ -77,9 +72,39 @@ class Runtime:
     
     def check_winner(self):
         # Verificar se há um vencedor
-        pass
+        if len(self.player_table.sunks) == 10:
+            print("Todos os navios foram afundado, O PLAYER venceu!!")
+        elif len(self.enemy_table.sunks) == 10:
+            print("Todos os navios foram afundado, O PC venceu!!")
     
-    def initialize_ships(self, player: Table):
+    def start_ships(self):
+        print("\n====escolhendo navios do player====\n")
+        while True:
+            print("1 - escolher navios")
+            print("2 - navios aleatorios")
+            resp = input(">")
+            if resp not in ["1","2"]: continue 
+            while True:
+                self.initialize_ships(self.player_table, resp)
+                show_ships_on_board(self.player_table.board)
+                while True:    
+                    print("0 - confirm")
+                    print("1 - escolher navios")
+                    print("2 - navios aleatorios")
+                    resp = input(">")
+                    if resp not in ["0","1","2"]:
+                        continue
+                    break
+                if resp == "0":
+                        break
+                self.player_table.reset_board()
+            break
+        
+        print("\n====escolhendo navios do pc====\n")
+        time.sleep(3)
+        self.initialize_ships(self.enemy_table)
+    
+    def initialize_ships(self, player: Table, way = ""):
         """
         função para inicializar e colocar os navios no tabuleiro de um player. 
         Usa funcoes de validacao para a escolha das posicoes do navio do player. Para o pc usa o modulo ramdom para fazer as escolhas.
@@ -96,7 +121,7 @@ class Runtime:
             
             for ship in range(num_ships):
                 while True:
-                    if player == self.player_table:
+                    if  way == "1":
                         show_ships_on_board(player.board)
                         x,y = get_valid_xy()
                         orientation = get_orientation()
@@ -104,12 +129,12 @@ class Runtime:
                         orientation = random.choice(["vertical","horizontal"])
                         x = random.randint(0,9)
                         y = random.randint(0,9)
-
+                    print(player)
+                    # print(player.board)
                     if is_valid_position((x,y), size, orientation, player.board):
                         ship_instance = Ship(name, (x,y), size, orientation)
                         player.place_ship(ship_instance)
                         break     
     
-    def test():
-        table = Table()
-        show_ships_on_board(table.board)
+    def test_print_boards(self):
+        print_boards(self.player_table.board, self.enemy_table.board)

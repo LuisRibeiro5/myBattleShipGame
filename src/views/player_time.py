@@ -1,7 +1,7 @@
 def get_player_attack():
     while True:
         try:
-            x = input("position x: ")
+            x = input("position x: ").upper()
             x = ord(x) - ord("A")#converte para idx da row
             if x < 0 or x >= 10:
                 print("choose a x between 0 - 9")

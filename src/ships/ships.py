@@ -1,15 +1,12 @@
 ships = {
-    "Porta-avioes": 5,
-    "Navios-tanque": 4,
-    "Navios-tanque": 4,
-    "Contratorpedeiros": 3,
-    "Contratorpedeiros": 3,
-    "Contratorpedeiros": 3,
-    "Submarino": 2,
-    "Submarino": 2,
-    "Submarino": 2,
-    "Submarino": 2
-}
+    #Tupla[0] tamanho do navio
+    #Tupla[1] quantidades de navio daquele tipo
+    
+        "Porta-avioes": (5,1), 
+        "Navios-tanque": (4,2),
+        "Contratorpedeiros": (3,3),
+        "Submarino": (2,4)
+    }
 
 class Ship:
     def __init__(self, name, initial_pos, size, orientation):
@@ -68,8 +65,6 @@ def is_valid_position(initial_pos,ship_size,ship_orientation, board):
     return: bool: retorna True se a posicao esta disponivel
     """
     x,y = initial_pos
-    print(f'{x=} {y=}')
-    print("iniciou testes")
     if not fits_in_table(initial_pos, ship_size, ship_orientation):
         print("nao coube na tabela")
         return False
@@ -109,8 +104,6 @@ def fits_in_table(initial_pos, ship_size,ship_orientation):
     return: bool: Se o navio cabe(É uma initial_pos válida) retorna True
     """
     x,y = initial_pos
-    print(f'{ship_orientation=}')
-    print(f'fits in table {x=} {y=}')
     
     if ship_orientation == "horizontal":
         if y - 1 + ship_size > 9:#-1 porque incluimos a posicao inicial na contagem

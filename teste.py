@@ -52,6 +52,42 @@ def teste_ships():
         num_ships = ships[ship_types][1]
         for ship in range(num_ships):
             print(f'{name} - {size} - {ship_types}\n')
+            
+def test_get_enemy_attack():
+    import random
+    x = random.randint(ord('A'),ord('J'))
+    y = random.randint(0,9)
+    print(x - ord("A"), y)
+    
+def test_ship_coordinates():
+    class Ship:
+        def __init__(self, name, initial_pos, size, orientation):
+            self.name = name
+            self.initial_pos = initial_pos
+            self.orientation = orientation
+            self.size = size
+            self.coordinates = {}
+            self.sunk = False
+            
+            #inicializa todas posições do navio no tabuleiro
+            x,y = self.initial_pos
+
+            for i in range(self.size):
+                if self.orientation == "vertical":
+                    self.coordinates[ (x + i,y) ] = True
+                else:#Horizontal
+                    self.coordinates[ (x,y + i) ] = True
+    ship = Ship("hulk", (0,0), 5, "vertical")
+    for cords in ship.coordinates.keys():
+        print(cords)
+    
+    for item in ship.coordinates.values():
+        print(item)
+        
+    if all([value == False for value in ship.coordinates.values()]):
+        print("Navio destruido")
+    else:
+        print("continua")
 if __name__ == "__main__":
-    teste_ships()
+    test_ship_coordinates()
                

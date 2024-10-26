@@ -1,4 +1,4 @@
-from src.runtime import Runtime
+from .src.runtime import Runtime
 
 if __name__ == "__main__":
 
