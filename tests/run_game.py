@@ -23,5 +23,9 @@ def test_start():
     run = Runtime()
     run.start_game()
 
+def test():
+    run = Runtime()
+    run.test_print_boards()
+
 if __name__ == "__main__":
     test_start()

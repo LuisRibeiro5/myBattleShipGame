@@ -17,10 +17,8 @@ class Table:
         """
         self.ships.append(ship)
         for x,y in ship.coordinates:
-            print(x,y)
             self.board[x][y] = "1"
-            
-        pass
+        
     
     def is_hit(self, coordinates):
         """
@@ -36,32 +34,33 @@ class Table:
         if self.board[x][y] == " ": 
             self.game_board[x][y] = "~"
             self.board[x][y] = "~"
-            print("acertou o mar")
+            print("~~~~~ Acertou o mar ~~~~~")
             return False
         
         #acertou um navio
         self.game_board[x][y] = "X"
         self.board[x][y] = "X"
-        print("acertou um navio")
-        self.ship_destroyed((x,y))
+        msg = self.ship_destroyed((x,y))
         return True
             
             
         
-        # Verifica se um navio foi afundado
-        #   Se foi colocar na lista sunks
-    
+       
+    # Verifica se um navio foi afundado
+    #   Se foi colocar na lista sunks
     def ship_destroyed(self, coordinate):
         for ship in self.ships:
             for cords in ship.coordinates.keys():
                 if cords == coordinate:
                     ship.coordinates[cords] = False
+                    msg = f'==== {ship.name} acertado!!! ===='
                     
                     #se essa condicao retornar True o navio foi destruido
                     if all([value == False for value in ship.coordinates.values()]):
-                        print(f"Voce afundou o navio {ship.name}!!!")
+                        msg = f"==== {ship.name} AFUNDADO!!! ===="
                         self.sunks.append(ship)
 
+                    print(msg)
                     return
                 
         
@@ -70,4 +69,6 @@ class Table:
         Funcao criada para resetar os navios da table com intuito de realizar a escolha de navios aleatorios varias vezes.
         """
         self.board = [[" " for j in range(10)] for i in range(10)]
+        self.game_board = [[" " for j in range(10)] for i in range(10)]
+        self.ships = []
         

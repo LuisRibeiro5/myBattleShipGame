@@ -1,7 +1,8 @@
 def display_home_menu():
-    print("=== Batalha Naval ===")
-    print("1. Iniciar Jogo")
-    print("2. sair")
+    import os
+    print("="*10, "Batalha Naval", "="*10)
+    print("1.\t Iniciar Jogo")
+    print("2.\t sair")
     resp = input("> ")
     
     if resp == "2":
@@ -10,4 +11,5 @@ def display_home_menu():
         return
     else:
         print("Escolha uma opcao 1/2")
+        os.system('cls' if os.name == 'nt' else 'clear')
         display_home_menu()

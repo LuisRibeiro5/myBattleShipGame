@@ -16,8 +16,8 @@ def get_player_attack():
     return (x,y)
 
 def display_player_turn():
-    print("="*10)
+    print("="*19)
     print("Sua vez de atacar!")
-    print("="*10)
+    print("="*19)
     
 

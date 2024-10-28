@@ -88,6 +88,45 @@ def test_ship_coordinates():
         print("Navio destruido")
     else:
         print("continua")
+        
+def teste_if_return_msg():
+    def is_valid(palavra):
+        if palavra == "boi":
+            return "msg erro"
+        if palavra == "animal":
+            return "msg outroErro"
+
+    erro = is_valid("animal")
+    if erro:
+        print(erro)
+    else: 
+        print("deu certo")
+      
+def teste_if():
+    from src.ships.ships import Ship, is_valid_position
+    from src.table.table import Table
+    
+    way = '1'
+    player = Table()
+    player.board[0][0] = "1"
+    name = "Gigante"
+    size = 5
+    orientation = "vertical"
+    x,y = (0,0)
+    
+    is_valid, msg = is_valid_position((x,y), size, orientation, player.board)
+    
+    if way == '1':
+        print(msg)
+    
+    if is_valid:
+        ship_instance = Ship(name, (x,y), size, orientation)
+        player.place_ship(ship_instance)  
+    
+    print(is_valid)
+    print(msg)
+    
 if __name__ == "__main__":
-    test_ship_coordinates()
+    # teste_if()
+    teste_if()
                

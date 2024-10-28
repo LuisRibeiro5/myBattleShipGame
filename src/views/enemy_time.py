@@ -19,6 +19,6 @@ def get_enemy_attack():
     return (x,y)
 
 def display_enemy_turn():
-    print("="*10)
+    print("="*19)
     print("ATAQUE DO INIMIGO")
-    print("="*10)
+    print("="*19)

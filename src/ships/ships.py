@@ -62,12 +62,11 @@ def is_valid_position(initial_pos,ship_size,ship_orientation, board):
     param: ship_size: int informando tamanho dos navios
     param: ship_orientation: string com "vertical" ou "horizontal"
     param: board: Table.board para validar as posicoes
-    return: bool: retorna True se a posicao esta disponivel
+    return: tuple: retorna se a posicao está disponivel ou nao e uma msg
     """
     x,y = initial_pos
     if not fits_in_table(initial_pos, ship_size, ship_orientation):
-        print("nao coube na tabela")
-        return False
+        return False, "Ultrapassou os limites do tabuleiro."
     
     if ship_orientation == "vertical":
         #for aninha que verifica se posição e posições em volta estão livres ou não
@@ -75,8 +74,8 @@ def is_valid_position(initial_pos,ship_size,ship_orientation, board):
             for j in range(-1,2):
                 try:
                     if board[row][y - j] != " ":
-                        print("Tem navio perto!")
-                        return False
+            
+                        return False, "Ja existe um navio perto"
                 except:
                     continue
         
@@ -85,14 +84,12 @@ def is_valid_position(initial_pos,ship_size,ship_orientation, board):
             for col in range(y - 1, y + ship_size + 1):
                 try:
                     if board[x - i][col] != " ":
-                        print(f'{x - i} {col}')
-                        print("Tem navio perto!")
-                        return False
+                        
+                        return False, "Ja existe um navio perto"
                 except:
                     continue
                 
-    print("pos valida")
-    return True
+    return True, "Navio posicionado!!!"
 
 def fits_in_table(initial_pos, ship_size,ship_orientation):
     """
