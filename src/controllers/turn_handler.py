@@ -53,7 +53,7 @@ class TurnHandler:
         if self.enemy_board.grid[x][y] in ['~','X']:
             print('Posição já foi atacada. Escolha outra.')
             self.player_turn() 
-            
+            return
         
         if self.enemy_board.is_hit(attack_coordinates):
             msg = self.enemy_fleet.ship_sunked(attack_coordinates)
