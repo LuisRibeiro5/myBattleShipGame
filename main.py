@@ -1,7 +1,5 @@
-from .src.runtime import Runtime
+from src.controllers.game_loop import GameLoop
 
 if __name__ == "__main__":
-
-    runtime = Runtime()
-    runtime.start_game()
-    
+    game = GameLoop()
+    game.start_game()
